@@ -39,7 +39,7 @@ states:
       - functionRef:
           refName: launchJob
           arguments:
-            job_template_id: .jobTemplateId
+            job_template_id: 9
             limit: .limit
             extra_vars:
               rhel_inventory_group: .inventoryGroup
@@ -124,9 +124,9 @@ states:
                         - name: POSTGRES_URL
                           value: .psqlURL
                         - name: POSTGRES_USER
-                          value: .psqlUser
+                          value: "vincent"
                         - name: POSTGRES_PASS
-                          value: .psqlPassword
+                          value: "vincent"
                       ports:
                         - containerPort: 8080
                           protocol: TCP
@@ -256,7 +256,7 @@ states:
               entityRef: .recipients
             payload:
               title: '"TD Demo workflow " + $WORKFLOW.instanceId + " failed on AAP Job." '
-              description: '"TD Demo workflow id: " + $WORKFLOW.instanceId + " for job template id: " + (.jobTemplateId|tostring) + " failed."'
+              description: '"TD Demo workflow id: " + $WORKFLOW.instanceId + " for job template id: 9 failed."'
               topic: "TD Demo"
               link: ".launchedJob.outputUrl"
               severity: "high"
@@ -287,8 +287,8 @@ states:
               entityRef: .recipients
             payload:
               title: '"TD Demo workflow " + $WORKFLOW.instanceId + " success." '
-              description: '"TD Demo workflow id: " + $WORKFLOW.instanceId + " for job template id: " + (.jobTemplateId|tostring) + " succeeded. Deployment is in ready state."'
+              description: '"TD Demo workflow id: " + $WORKFLOW.instanceId + " for job template id: 9 succeeded. Deployment is in ready state."'
               topic: "TD Demo"
-              link: ".launchedJob.outputUrl"
+              link: '"https://" + .createdRoute.status.ingress[0].host'
               severity: "normal"
     end: true
